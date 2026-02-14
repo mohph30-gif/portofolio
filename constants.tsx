@@ -32,7 +32,7 @@ export const PROJECTS: Project[] = [
     description: "Development of a crypto wallet & messenger application for a UK fintech startup. Secure transactions and real-time messaging.",
     tags: ["Flutter", "Fintech", "Crypto"],
     color: "bg-yellow-300",
-    image: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&q=80&w=800", // Crypto theme
+    image: "/assets/projects/portofoli-crypto.png",
     links: {
       android: "https://play.google.com/store/apps/details?id=com.tectone23.portofoli.ltd"
     }
@@ -44,7 +44,7 @@ export const PROJECTS: Project[] = [
     description: "Contribution to a coaching application, implementing real-time chat features and UI enhancements for a German client.",
     tags: ["Flutter", "Real-time Chat", "Germany"],
     color: "bg-green-300",
-    image: "https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&q=80&w=1200", // Coaching / personal development
+    image: "/assets/projects/coi-coaching.png",
     links: {
       web: "https://app.the-coi.com/coaching-app"
     }
@@ -66,7 +66,7 @@ export const PROJECTS: Project[] = [
     description: "Mobile application available on the App Store focused on skill development.",
     tags: ["iOS", "Flutter", "Education"],
     color: "bg-red-300",
-    image: "/assets/projects/blackskill-african-football.jpeg",
+    image: "/assets/projects/blackskill-african-football.png",
     links: {
       ios: "https://apps.apple.com/dz/app/blackskill/id6757500081"
     }
@@ -78,7 +78,7 @@ export const PROJECTS: Project[] = [
     description: "Productivity and planning tool available on the App Store to help users manage their daily tasks.",
     tags: ["Productivity", "iOS", "Planning"],
     color: "bg-orange-300",
-    image: "/assets/projects/macroplanr-diet.jpeg",
+    image: "/assets/projects/macroplanr-diet.png",
     links: {
       ios: "https://apps.apple.com/dz/app/macroplanr/id6754331460"
     }
