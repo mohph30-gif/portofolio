@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { SOCIAL_LINKS } from '../constants';
 
+const PROFILE_IMAGE = '/assets/profile.jpg';
+
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,9 +44,11 @@ const Navbar: React.FC = () => {
             onClick={(e) => handleNavClick(e, '#home')}
             className="flex items-center gap-2"
           >
-            <div className="w-10 h-10 bg-black text-white flex items-center justify-center font-bold text-xl border-2 border-transparent">
-              TS
-            </div>
+            <img
+              src={PROFILE_IMAGE}
+              alt="Tighezza Salah"
+              className="w-10 h-10 rounded-full object-cover border-2 border-black"
+            />
             <span className="font-bold text-xl hidden sm:block">Tighezza Salah</span>
           </a>
 
@@ -62,6 +66,8 @@ const Navbar: React.FC = () => {
             ))}
             <a 
               href={SOCIAL_LINKS.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-green-400 px-4 py-2 border-2 border-black font-bold text-sm brutal-shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
             >
               Let's Talk

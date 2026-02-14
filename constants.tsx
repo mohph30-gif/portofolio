@@ -3,12 +3,12 @@ import { Smartphone, Database, Globe, Rocket, Layers, MessageCircle } from 'luci
 import React from 'react';
 
 export const SOCIAL_LINKS = {
-  email: "medsalah203094@gmail.com",
+  email: "salahdevmobile@gmail.com",
   phone: "+213656375516",
-  whatsapp: "whatsapp://send?phone=+213656375516",
+  whatsapp: "https://wa.me/213656375516",
   linkedin: "https://www.linkedin.com/in/mohammed-salah-tighezza-743462142/",
   website: "https://medsalah.netlify.app/",
-  facebook: "https://www.facebook.com/"
+  facebook: "https://www.facebook.com/share/1HFRvNvGW6/?mibextid=wwXIfr"
 };
 
 export const PROJECTS: Project[] = [
@@ -19,7 +19,7 @@ export const PROJECTS: Project[] = [
     description: "Development and publication of the E-Umma Islamia mobile application using Flutter and Firebase. Features prayer times, qibla direction, and community features.",
     tags: ["Flutter", "Firebase", "Publication"],
     color: "bg-blue-300",
-    image: "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?auto=format&fit=crop&q=80&w=800", // Mosque/Islamic theme
+    image: "/assets/projects/e-umma-islamic.png",
     links: {
       android: "https://play.google.com/store/apps/details?id=com.eummahislamia.eummahislamiaapp",
       ios: "https://apps.apple.com/fr/app/e-umma-islamia/id6503656498"
@@ -44,7 +44,7 @@ export const PROJECTS: Project[] = [
     description: "Contribution to a coaching application, implementing real-time chat features and UI enhancements for a German client.",
     tags: ["Flutter", "Real-time Chat", "Germany"],
     color: "bg-green-300",
-    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800", // Messaging/Chat theme
+    image: "https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&q=80&w=1200", // Coaching / personal development
     links: {
       web: "https://app.the-coi.com/coaching-app"
     }
@@ -66,7 +66,7 @@ export const PROJECTS: Project[] = [
     description: "Mobile application available on the App Store focused on skill development.",
     tags: ["iOS", "Flutter", "Education"],
     color: "bg-red-300",
-    image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=800", // Education/Skill theme
+    image: "/assets/projects/blackskill-african-football.jpeg",
     links: {
       ios: "https://apps.apple.com/dz/app/blackskill/id6757500081"
     }
@@ -78,7 +78,7 @@ export const PROJECTS: Project[] = [
     description: "Productivity and planning tool available on the App Store to help users manage their daily tasks.",
     tags: ["Productivity", "iOS", "Planning"],
     color: "bg-orange-300",
-    image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=800", // Planning theme
+    image: "/assets/projects/macroplanr-diet.jpeg",
     links: {
       ios: "https://apps.apple.com/dz/app/macroplanr/id6754331460"
     }

@@ -3,7 +3,18 @@ import { Download, Linkedin, Mail, Facebook, Phone } from 'lucide-react';
 import Button from './Button';
 import { SOCIAL_LINKS } from '../constants';
 
+const PROFILE_IMAGE = '/assets/profile.jpg';
+
 const Hero: React.FC = () => {
+  const handleContactScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+      window.history.replaceState(null, '', '#contact');
+    }
+  };
+
   return (
     <section id="home" className="min-h-[calc(100vh-80px)] flex items-center bg-white border-b-4 border-black relative overflow-hidden">
       
@@ -30,31 +41,30 @@ const Hero: React.FC = () => {
 
           <div className="flex flex-wrap gap-4 mb-8">
             <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="p-3 border-2 border-black bg-blue-200 hover:bg-blue-300 brutal-shadow-sm transition-all"><Linkedin className="w-6 h-6" /></a>
-            <a href={`mailto:${SOCIAL_LINKS.email}`} className="p-3 border-2 border-black bg-red-200 hover:bg-red-300 brutal-shadow-sm transition-all"><Mail className="w-6 h-6" /></a>
+            <a href="#contact" onClick={handleContactScroll} className="p-3 border-2 border-black bg-red-200 hover:bg-red-300 brutal-shadow-sm transition-all"><Mail className="w-6 h-6" /></a>
             <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-3 border-2 border-black bg-blue-500 text-white hover:bg-blue-600 brutal-shadow-sm transition-all"><Facebook className="w-6 h-6" /></a>
-            <a href={SOCIAL_LINKS.whatsapp} className="p-3 border-2 border-black bg-green-200 hover:bg-green-300 brutal-shadow-sm transition-all"><Phone className="w-6 h-6" /></a>
+            <a href={SOCIAL_LINKS.whatsapp} target="_blank" rel="noopener noreferrer" className="p-3 border-2 border-black bg-green-200 hover:bg-green-300 brutal-shadow-sm transition-all"><Phone className="w-6 h-6" /></a>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
             <a href="#contact" className="w-full sm:w-auto">
               <Button className="w-full">Hire Me Now</Button>
             </a>
-            <a href="/assets/CV-English.pdf" download className="w-full sm:w-auto">
+            <a href="/assets/CV-English.pdf" download="CV-English.pdf" className="w-full sm:w-auto">
               <Button variant="outline" className="w-full" icon={<Download className="w-4 h-4" />}>Download CV</Button>
             </a>
           </div>
         </div>
 
         <div className="order-1 md:order-2 flex justify-center relative">
-           {/* Abstract Profile Representation */}
-           <div className="w-64 h-64 md:w-96 md:h-96 bg-black flex items-center justify-center border-4 border-black brutal-shadow relative">
-              <div className="absolute inset-0 bg-yellow-400 translate-x-2 translate-y-2 border-4 border-black -z-10"></div>
-              <div className="text-white text-center p-6">
-                 <div className="text-6xl mb-4">👨‍💻</div>
-                 <h3 className="text-2xl font-bold">Mobile Architect</h3>
-                 <p className="mt-2 text-sm opacity-80">Building scalable solutions from Tlemcen to the World.</p>
-              </div>
-           </div>
+          <div className="w-72 h-72 md:w-[28rem] md:h-[28rem] bg-black border-4 border-black brutal-shadow relative overflow-hidden">
+            <div className="absolute inset-0 bg-yellow-400 translate-x-2 translate-y-2 border-4 border-black -z-10"></div>
+            <img
+              src={PROFILE_IMAGE}
+              alt="Mohammed Salah"
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
       </div>
     </section>
