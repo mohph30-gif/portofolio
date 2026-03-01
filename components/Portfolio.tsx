@@ -1,92 +1,105 @@
 import React from 'react';
-import Section from './Section';
-import { PROJECTS } from '../constants';
-import { ExternalLink, Tag } from 'lucide-react';
+import { ArrowUpRight, ExternalLink } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { PROJECTS } from '../content/projects';
+import Button from './Button';
+import { trackContactButtonClick } from '../lib/analytics/events';
 
-const Portfolio: React.FC = () => {
+export default function Portfolio() {
+  const location = useLocation();
+
   return (
-    <Section id="portfolio" title="Portfolio" subtitle="Latest Works">
-      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
-        {PROJECTS.map((project, idx) => (
-          <div 
-            key={idx} 
-            className="flex flex-col h-full border-4 border-black brutal-shadow bg-white overflow-hidden group"
+    <section id="projects" className="px-4 py-20 md:px-6">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-600">Selected projects</p>
+            <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
+              Case studies built to convert trust, not just decorate the homepage.
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              Each featured project now links into a dedicated case-study page so visitors and search engines can
+              understand the problem, the solution, and the delivery scope.
+            </p>
+          </div>
+          <Link
+            to="/contact"
+            onClick={() =>
+              trackContactButtonClick({
+                cta_location: 'projects_section',
+                cta_label: 'project_consultation',
+                page_type: location.pathname === '/' ? 'home' : 'site',
+                page_path: location.pathname,
+                section_id: 'projects',
+              })
+            }
           >
-            {/* Image Section */}
-            <div className="relative h-48 overflow-hidden border-b-4 border-black">
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all z-10"></div>
-              <img 
-                src={project.image} 
-                alt={project.title} 
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute top-2 right-2 z-20">
-                <span className="bg-white px-2 py-1 border-2 border-black text-xs font-bold uppercase shadow-sm">
-                  {project.role}
-                </span>
-              </div>
-            </div>
+            <Button variant="outline">Discuss a similar project</Button>
+          </Link>
+        </div>
 
-            <div className={`p-4 border-b-4 border-black ${project.color}`}>
-              <div className="flex justify-between items-center mb-1">
-                 <span className="font-bold text-xs bg-black text-white px-2 py-0.5">{project.duration}</span>
-              </div>
-              <h3 className="text-2xl font-black leading-tight">{project.title}</h3>
-            </div>
-            
-            <div className="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <p className="font-medium text-gray-800 mb-6 line-clamp-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="flex items-center gap-1 text-xs font-bold text-gray-500 bg-gray-100 px-2 py-1 border border-black rounded-none">
-                      <Tag className="w-3 h-3" /> {tag}
-                    </span>
-                  ))}
+        <div className="mt-12 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+          {PROJECTS.map((project) => (
+            <article
+              key={project.slug}
+              className="group overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)]"
+            >
+              <div className="relative overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="h-56 w-full object-cover transition duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 inline-flex rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700">
+                  {project.role}
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3 mt-auto pt-4 border-t-2 border-gray-100">
-                {project.links.android && (
-                  <a 
-                    href={project.links.android} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex-1 text-center bg-green-500 text-white font-bold py-2 border-2 border-black hover:bg-green-600 text-sm flex items-center justify-center gap-2 hover:translate-y-[-2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
-                  >
-                    Android
-                  </a>
-                )}
-                {project.links.ios && (
-                  <a 
-                    href={project.links.ios} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex-1 text-center bg-blue-500 text-white font-bold py-2 border-2 border-black hover:bg-blue-600 text-sm flex items-center justify-center gap-2 hover:translate-y-[-2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
-                  >
-                    iOS
-                  </a>
-                )}
-                {project.links.web && (
-                   <a 
-                    href={project.links.web} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex-1 text-center bg-gray-800 text-white font-bold py-2 border-2 border-black hover:bg-black text-sm flex items-center justify-center gap-2 hover:translate-y-[-2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
-                  >
-                    Web <ExternalLink className="w-3 h-3"/>
-                  </a>
-                )}
-                {!project.links.android && !project.links.ios && !project.links.web && (
-                  <span className="text-sm font-bold text-gray-400 italic w-full text-center">Internal Project</span>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </Section>
-  );
-};
+              <div className="p-6">
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="text-2xl font-semibold tracking-tight text-slate-950">{project.shortTitle}</h3>
+                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-500">
+                    {project.duration}
+                  </span>
+                </div>
 
-export default Portfolio;
+                <p className="mt-4 text-base leading-7 text-slate-600">{project.summary}</p>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {project.techStack.slice(0, 4).map((tag) => (
+                    <span key={tag} className="rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Link
+                    to={`/projects/${project.slug}`}
+                    className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-3 text-sm font-semibold text-white"
+                  >
+                    View case study
+                    <ArrowUpRight className="h-4 w-4" />
+                  </Link>
+
+                  {project.links.web ? (
+                    <a
+                      href={project.links.web}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700"
+                    >
+                      Live project
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

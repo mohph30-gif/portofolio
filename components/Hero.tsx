@@ -1,74 +1,186 @@
 import React from 'react';
-import { Download, Linkedin, Mail, Facebook, Phone } from 'lucide-react';
+import { ArrowRight, Download, Mail, MessageCircle } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import Button from './Button';
-import { SOCIAL_LINKS } from '../constants';
+import { HERO_STATS, SOCIAL_LINKS } from '../content/site';
+import { trackContactButtonClick, trackCvDownload, trackEmailClick, trackWhatsappClick } from '../lib/analytics/events';
 
 const PROFILE_IMAGE = '/assets/profile.jpg';
 
-const Hero: React.FC = () => {
-  const handleContactScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-      window.history.replaceState(null, '', '#contact');
-    }
-  };
+export default function Hero() {
+  const location = useLocation();
+  const pagePath = location.pathname;
 
   return (
-    <section id="home" className="min-h-[calc(100vh-80px)] flex items-center bg-white border-b-4 border-black relative overflow-hidden">
-      
-      {/* Decorative blobs */}
-      <div className="absolute top-20 right-[-100px] w-64 h-64 bg-yellow-300 rounded-full border-4 border-black hidden lg:block opacity-50 pointer-events-none"></div>
-      <div className="absolute bottom-10 left-[-50px] w-40 h-40 bg-blue-300 rounded-full border-4 border-black hidden lg:block opacity-50 pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto px-4 md:px-8 w-full grid md:grid-cols-2 gap-12 items-center py-12">
-        <div className="order-2 md:order-1">
-          <div className="inline-block px-4 py-2 bg-green-300 border-2 border-black font-bold mb-6 brutal-shadow-sm rotate-[-2deg]">
-            👋 Hello, I'm
-          </div>
-          <h1 className="text-5xl md:text-7xl font-black mb-6 leading-none">
-            TIGHEZZA <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600" style={{ WebkitTextStroke: '2px black' }}>M. SALAH</span>
-          </h1>
-          <p className="text-xl md:text-2xl font-bold mb-8 text-gray-700 bg-gray-100 border-l-4 border-black p-4">
-            Fullstack Mobile Developer
-            <br />
-            <span className="text-base md:text-lg font-normal mt-2 block">
-              Flutter • Firebase • Supabase
+    <section className="relative overflow-hidden px-4 pb-20 pt-10 md:px-6 md:pb-24 md:pt-16">
+      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+        <div className="max-w-3xl animate-fade-in-up">
+          <div className="group inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/50 px-4 py-2 text-sm font-semibold text-emerald-700 backdrop-blur-sm transition-all hover:bg-emerald-100/50 hover:shadow-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
             </span>
+            Flutter developer in Algeria
+          </div>
+
+          <h1 className="mt-8 max-w-3xl text-balance text-5xl font-extrabold tracking-tight md:text-7xl">
+            <span className="text-slate-900">I build mobile apps that </span>
+            <span className="text-gradient">ship fast and feel premium.</span>
+          </h1>
+
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 md:text-xl font-medium">
+            Full-stack Flutter developer for startups and product teams. I design, build, publish, and scale Android
+            and iOS apps with Firebase and Supabase.
           </p>
 
-          <div className="flex flex-wrap gap-4 mb-8">
-            <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="p-3 border-2 border-black bg-blue-200 hover:bg-blue-300 brutal-shadow-sm transition-all"><Linkedin className="w-6 h-6" /></a>
-            <a href="#contact" onClick={handleContactScroll} className="p-3 border-2 border-black bg-red-200 hover:bg-red-300 brutal-shadow-sm transition-all"><Mail className="w-6 h-6" /></a>
-            <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="p-3 border-2 border-black bg-blue-500 text-white hover:bg-blue-600 brutal-shadow-sm transition-all"><Facebook className="w-6 h-6" /></a>
-            <a href={SOCIAL_LINKS.whatsapp} target="_blank" rel="noopener noreferrer" className="p-3 border-2 border-black bg-green-200 hover:bg-green-300 brutal-shadow-sm transition-all"><Phone className="w-6 h-6" /></a>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a
+              href={SOCIAL_LINKS.whatsapp}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() =>
+                trackWhatsappClick({
+                  cta_location: 'hero',
+                  cta_label: 'chat_on_whatsapp',
+                  page_type: 'home',
+                  page_path: pagePath,
+                  link_url: SOCIAL_LINKS.whatsapp,
+                })
+              }
+            >
+              <Button variant="secondary" icon={<MessageCircle className="h-4 w-4" />}>
+                Chat on WhatsApp
+              </Button>
+            </a>
+            <Link
+              to="/#projects"
+              onClick={() =>
+                trackContactButtonClick({
+                  cta_location: 'hero',
+                  cta_label: 'view_projects',
+                  page_type: 'home',
+                  page_path: pagePath,
+                  section_id: 'projects',
+                  method: 'internal_navigation',
+                })
+              }
+            >
+              <Button variant="primary" icon={<ArrowRight className="h-4 w-4" />}>
+                View Projects
+              </Button>
+            </Link>
+            <a
+              href="/assets/CV-English.pdf"
+              download="CV-English.pdf"
+              onClick={() =>
+                trackCvDownload({
+                  cta_location: 'hero',
+                  cta_label: 'download_cv',
+                  page_type: 'home',
+                  page_path: pagePath,
+                  link_url: '/assets/CV-English.pdf',
+                })
+              }
+            >
+              <Button variant="outline" icon={<Download className="h-4 w-4" />}>
+                Download CV
+              </Button>
+            </a>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#contact" className="w-full sm:w-auto">
-              <Button className="w-full">Hire Me Now</Button>
+          <div className="mt-6 flex flex-wrap gap-3 text-sm text-slate-500">
+            <a
+              href={`mailto:${SOCIAL_LINKS.email}`}
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 font-medium text-slate-700 hover:border-slate-300"
+              onClick={() =>
+                trackEmailClick({
+                  cta_location: 'hero',
+                  cta_label: 'email_chip',
+                  page_type: 'home',
+                  page_path: pagePath,
+                  link_url: `mailto:${SOCIAL_LINKS.email}`,
+                })
+              }
+            >
+              <Mail className="h-4 w-4" />
+              Email me
             </a>
-            <a href="/assets/CV-English.pdf" download="CV-English.pdf" className="w-full sm:w-auto">
-              <Button variant="outline" className="w-full" icon={<Download className="w-4 h-4" />}>Download CV</Button>
-            </a>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 font-medium text-slate-700 hover:border-slate-300"
+              onClick={() =>
+                trackContactButtonClick({
+                  cta_location: 'hero',
+                  cta_label: 'contact_page',
+                  page_type: 'home',
+                  page_path: pagePath,
+                  section_id: 'contact',
+                })
+              }
+            >
+              Contact page
+            </Link>
+          </div>
+
+          <div className="mt-12 grid gap-4 sm:grid-cols-3">
+            {HERO_STATS.map((item, index) => (
+              <div
+                key={item.label}
+                className="group relative overflow-hidden rounded-[1.5rem] glass p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="relative z-10">
+                  <div className="text-sm font-bold uppercase tracking-wider text-slate-500">{item.label}</div>
+                  <div className="mt-3 text-3xl font-extrabold text-slate-900">{item.value}</div>
+                  {item.note ? <div className="mt-1 text-sm font-medium text-slate-500">{item.note}</div> : null}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="order-1 md:order-2 flex justify-center relative">
-          <div className="w-72 h-72 md:w-[28rem] md:h-[28rem] bg-black border-4 border-black brutal-shadow relative overflow-hidden">
-            <div className="absolute inset-0 bg-yellow-400 translate-x-2 translate-y-2 border-4 border-black -z-10"></div>
-            <img
-              src={PROFILE_IMAGE}
-              alt="Mohammed Salah"
-              className="w-full h-full object-cover"
-            />
+        <div className="relative mx-auto w-full max-w-md lg:ml-auto animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+          {/* Decorative Elements */}
+          <div className="absolute -inset-4 z-0 rounded-[3rem] bg-gradient-to-br from-emerald-400/20 via-sky-400/20 to-purple-400/20 blur-2xl" />
+
+          <div className="group relative z-10 overflow-hidden rounded-[2rem] glass p-3 shadow-2xl transition-transform duration-500 hover:scale-[1.02]">
+            <div className="relative overflow-hidden rounded-[1.5rem] bg-slate-900 p-5 text-white">
+              <div className="absolute inset-0 bg-[url('/assets/noise.png')] opacity-20 mix-blend-overlay" />
+
+              <div className="relative z-10 flex items-start justify-between">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.3em] text-emerald-400">Trusted Partner</p>
+                  <h2 className="mt-2 text-2xl font-bold tracking-tight">Tighezza M. Salah</h2>
+                </div>
+                <span className="flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-300 backdrop-blur-md">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Available
+                </span>
+              </div>
+              <div className="relative mt-6 overflow-hidden rounded-[1.25rem]">
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent z-10" />
+                <img
+                  src={PROFILE_IMAGE}
+                  alt="Tighezza M. Salah portrait"
+                  className="h-[24rem] w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+            </div>
+
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-[1.25rem] bg-white/50 p-4 backdrop-blur-md border border-white/60 transition-colors hover:bg-white/80">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Tech Stack</div>
+                <div className="mt-1 text-sm font-extrabold text-slate-900">Flutter, Firebase, Supabase</div>
+              </div>
+              <div className="rounded-[1.25rem] bg-white/50 p-4 backdrop-blur-md border border-white/60 transition-colors hover:bg-white/80">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Execution</div>
+                <div className="mt-1 text-sm font-extrabold text-slate-900">Fast iteration, release-ready</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default Hero;
+}
